@@ -62,15 +62,11 @@ def diff_2(field, N, dx, order):
 
         field_diff = field[post_idxs] - field
 
-        print(post_idxs[10], '-',prev_idxs[10])
-
     elif order == 4:
         # @todo no da buenos resultados, revisar
 
         field_diff = (c0 * (field[post_idxs] - field) )
-        - ( c1 *(field[post_post_idxs] - field[prev_idxs]) )
-
-        print(post_idxs[10], '-',10, post_post_idxs[10], '-', prev_idxs[10])
+        + ( c1 *(field[post_post_idxs] - field[prev_idxs]) )
 
     ##Then corrects the boundary values
     boundary_idx = np.arange(0, len(field), N)
@@ -96,13 +92,14 @@ def diff_2(field, N, dx, order):
 
     return field_diff
 
-dx = 0.05
+dx = 0.001
 
 x = np.arange(0,2 * np.pi,dx)
 
-y = np.sin(x)
+y = np.sin(x) + np.sin(x * 3)
 
-y_diff = np.cos(x)
+y_diff = np.cos(x) + np.cos(x * 3)
+
 
 field_diff_a = y_diff
 
@@ -122,6 +119,6 @@ field_diff_2 = diff_2(field, len(x), dx, 2)
 x_plot = np.arange(0, dx * len(x) * N_rows, dx)
 
 plt.plot(x_plot, field_diff_2)
-plt.plot(x_plot, field_diff_4)
+#plt.plot(x_plot, field_diff_4)
 plt.plot(x_plot, field_diff_a)
 plt.show()
